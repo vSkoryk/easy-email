@@ -25,6 +25,7 @@ import {
   EmailEditor,
   EmailEditorProvider,
   IEmailTemplate,
+  useEditorProps,
 } from 'easy-email-editor';
 
 import { Stack } from '@demo/components/Stack';
@@ -213,6 +214,39 @@ export default function Editor() {
           onSubmit={onSubmit}
           dashed={false}
           compact={compact}
+          toolbar={{
+            suffix: execCommand => {
+              const { mergeTagGenerate } = useEditorProps();
+              return (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flex: '1 0 auto',
+                    zIndex: 2,
+                    border: '1px solid red',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <div
+                    style={{
+                      color: 'white',
+                      display: 'flex',
+                      alignItems: 'center',
+                      zIndex: 2,
+                      // marginLeft: 'auto',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() =>
+                      execCommand('insertHTML', mergeTagGenerate('parent.child'))
+                    }
+                  >
+                    Add variable
+                  </div>
+                </div>
+              );
+            },
+          }}
         >
           {({ values }, { submit, restart }) => {
             return (
